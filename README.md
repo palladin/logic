@@ -2,7 +2,7 @@
 A logic programming library for F# based on [miniKanren] and [μKanren]. It is designed to offer an idiomatic F# programming style and also resemble the scheme version of miniKanren.
 
 ## Example
-The peano function in Scheme miniKanren
+The peano function in Scheme-miniKanren
 ``` scheme
 (define peano
   (lambda (n)
