@@ -16,7 +16,7 @@ The peano function in Scheme-miniKanren
 ```
 
 ## The Reasoned Schemer
-For the functional programmer who wants to learn to think logically there is no better introduction than the [The Reasoned Schemer].
+For the functional programmer who wants to learn to think logically there is no better introduction than [The Reasoned Schemer].
 
 ![alt text](http://mitpress.mit.edu/sites/default/files/imagecache/booklist_node/9780262562140.jpg "The Book")
 
