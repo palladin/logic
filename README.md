@@ -1,6 +1,20 @@
 # logic
 A logic programming library for F# based on [miniKanren] and [μKanren]. It is designed to offer an idiomatic F# programming style and also resemble the scheme version of miniKanren.
 
+## Example
+The peano function in Scheme miniKanren
+``` scheme
+(define peano
+  (lambda (n)
+    (conde
+     ((== 'z n))
+     ((fresh (n-)
+             (== `(s. ,n-) n)
+             (peano n-))))))
+             
+(run 3 (q) (peano q)) ;; '(z (s. z) (s. (s. z)))
+```
+
 ## The Reasoned Schemer
 For the functional programmer who wants to learn to think logically there is no better introduction than the [The Reasoned Schemer].
 
