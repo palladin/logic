@@ -14,6 +14,20 @@ The peano function in Scheme-miniKanren
              
 (run 3 (q) (peano q)) ;; '(z (s. z) (s. (s. z)))
 ```
+the F# version is pretty similar
+``` fsharp
+let rec peano n =
+    logic {
+        do! conde [ Str "z" == n;
+                    logic {
+                        let! n' = fresh
+                        do! Pair (Str "s", n') == n
+                        return! peano n'
+                    } ]
+    }
+
+run 3 (fun q -> peano q) //  [Str "z"; Pair (Str "s",Str "z"); Pair (Str "s",Pair (Str "s",Str "z"))]
+```
 
 ## The Reasoned Schemer
 For the functional programmer who wants to learn to think logically there is no better introduction than [The Reasoned Schemer].
