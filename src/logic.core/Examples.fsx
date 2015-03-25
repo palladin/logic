@@ -46,6 +46,14 @@ let rec fives x =
 
 run 9 fives
 
+let rec sixes x = 
+    logic {
+        do! conde [x == Int 6;
+                   logic { return! sixes x }]
+    }
+
+run 9 (fun q -> conde [fives q; sixes q])
+
 let rec peano n =
     logic {
         do! conde [ Str "z" == n;

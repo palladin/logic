@@ -1,5 +1,6 @@
 ﻿namespace logic.core
 open System
+open System.Collections.Generic
 open System.Linq
 
 module Logic = 
@@ -51,7 +52,23 @@ module Logic =
     // disj : Goal<'T> -> Goal<'T> -> Goal<'T> 
     let disj (goal : Goal<'T>) (goal' : Goal<'T>) =
         fun (state, counter) ->
-            seq { yield! Seq.append (goal (state, counter)) (goal' (state, counter)) }
+            let rec interleave (enum : Lazy<IEnumerator<_>>) (enum' : Lazy<IEnumerator<_>>) = 
+                seq { 
+                    let flag = enum.Force().MoveNext()
+                    if flag then
+                        yield enum.Force().Current
+                    
+                    let flag' = enum'.Force().MoveNext()
+                    if flag' then
+                        yield enum'.Force().Current
+                    
+                    if flag || flag' then
+                        yield! interleave enum enum'
+                }
+
+            let enum = lazy ((goal (state, counter)).GetEnumerator())
+            let enum' = lazy ((goal' (state, counter)).GetEnumerator())
+            interleave enum enum'
 
     // conde : Goal<'T> list -> Goal<'T>
     let conde list = List.reduce disj list
