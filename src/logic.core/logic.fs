@@ -46,6 +46,7 @@ module Logic =
             | None -> None
         | Int v, Int v' -> if v = v' then Some subst else None
         | Str v, Str v' -> if v = v' then Some subst else None 
+        | Empty, Empty -> Some subst 
         | _, _ -> None
 
 
