@@ -88,6 +88,12 @@ module Logic =
     let fresh3 : Goal<Term * Term * Term> = fun (subst, counter) -> seq { yield ((subst, counter + 3), (Var (sprintf "var%d" counter), Var (sprintf "var%d" (counter + 1)), Var (sprintf "var%d" (counter + 2)))) }
 
 
+    // print : string -> Term -> Goal<unit>
+    let print name (term : Term) = 
+         fun (subst, counter) -> 
+              printfn "%s = %A" name (walk term subst)
+              seq { yield ((subst, counter), ()) } 
+
     // run : int -> (Term -> Goal<'T>) -> Term list
     let run n (f : Term -> Goal<'T>) = 
         let rec substVars subst term = 
