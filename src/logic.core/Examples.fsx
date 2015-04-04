@@ -65,3 +65,18 @@ let rec peano n =
     }
 
 run 3 (fun q -> peano q)
+
+
+let rec appendo l s out =
+    logic {
+        do! conde [ logic { do! l == Empty
+                            do! s == out };
+                    logic {
+                        let! a, d, res = fresh3 
+                        do! Pair (a, d) == l
+                        do! Pair (a, res) == out
+                        return! appendo d s res
+                    }]
+    }
+
+run 2 (fun x -> appendo x (Pair (Int 3, Empty)) (Pair (Int 1, Pair (Int 2, Pair (Int 3, Empty)))))
